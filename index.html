@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Official Page</title>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #000;
+      color: #fff;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    /* صفحة التحميل - تم تطويرها */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 1s ease-out;
+    }
+
+    #loading-logo {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 4px solid #FFD700;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+      animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); filter: brightness(1); }
+      50% { transform: scale(1.2); filter: brightness(1.3); }
+      100% { transform: scale(1); filter: brightness(1); }
+    }
+
+    #loading-text {
+      color: #FFD700;
+      font-size: 18px;
+      margin-top: 15px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      opacity: 0;
+      animation: fadeIn 0.8s 0.5s forwards;
+    }
+
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    /* الصفحة الرئيسية */
+    #main-content {
+      display: none;
+      width: 100%;
+      max-width: 500px;
+      padding: 40px;
+      background: rgba(30, 30, 30, 0.8);
+      border-radius: 20px;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
+      backdrop-filter: blur(10px);
+      border: 1px solid #444;
+      position: relative;
+    }
+
+    .logo {
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 25px;
+      border-radius: 50%;
+      border: 4px solid #FFD700;
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #FFD700;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+    }
+
+    p {
+      font-size: 16px;
+      margin-bottom: 30px;
+      color: #ccc;
+    }
+
+    .lang-toggle {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #111;
+      border: 1px solid #FFD700;
+      color: #FFD700;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 14px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .social-links a {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #FFD700;
+      font-size: 15px;
+      text-decoration: none;
+      transition: transform 0.3s, box-shadow 0.3s;
+      width: 80px;
+      padding: 12px 5px;
+      border-radius: 12px;
+      background: #111;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+
+    .social-links a:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 15px rgba(255, 215, 0, 0.3);
+    }
+
+    .social-links a i {
+      font-size: 26px;
+      margin-bottom: 6px;
+      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+      color: inherit;
+    }
+
+    /* ألوان التطبيقات كما في السكريبت الأصلي */
+    .instagram i { color: #F4C542; }
+    .discord i    { color: #FFD700; }
+    .telegram i  { color: #F0B754; }
+    .roblox i    { color: #FFB300; }
+    .paypal i    { color: #FFCA28; }
+
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0, 0, 0, 0.9);
+      color: #FFD700;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      border: 1px solid #FFD700;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- صفحة التحميل - تم تطويرها -->
+  <div id="loading-screen">
+    <img src="M.png" alt="Logo" id="loading-logo">
+    <div id="loading-text">Loading ...</div>
+  </div>
+
+  <!-- الصفحة الرئيسية -->
+  <div id="main-content">
+    <button class="lang-toggle" id="lang-toggle">AR</button>
+    <img src="M.png" alt="Logo" class="logo" />
+    <h1 id="title">Mouad Oulmadani</h1>
+    <p id="subtitle">Welcome to my official page</p>
+
+    <div class="social-links">
+      <a href="https://www.instagram.com/mouad_oul007" target="_blank" class="instagram">
+        <i class="fab fa-instagram"></i>
+        <span id="instagram-text">Instagram</span>
+      </a>
+
+      <a href="#" id="copy-discord" class="discord">
+        <i class="fab fa-discord"></i>
+        <span id="discord-text">Discord</span>
+      </a>
+
+      <a href="https://t.me/mouad_oulmadani" target="_blank" class="telegram">
+        <i class="fab fa-telegram"></i>
+        <span id="telegram-text">Telegram</span>
+      </a>
+
+      <a href="https://www.roblox.com/users/2895099191/profile" target="_blank" class="roblox">
+        <i class="fas fa-cube"></i>
+        <span id="roblox-text">Roblox</span>
+      </a>
+
+      <a href="https://paypal.me/mouaa123" target="_blank" class="paypal">
+        <i class="fab fa-paypal"></i>
+        <span id="paypal-text">PayPal</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- رسالة التأكيد عند النسخ -->
+  <div class="toast" id="toast">Copied username: mouad_oul2008</div>
+
+  <script>
+    const langToggle = document.getElementById('lang-toggle');
+    const title = document.getElementById('title');
+    const subtitle = document.getElementById('subtitle');
+    const toast = document.getElementById('toast');
+    const loadingText = document.getElementById('loading-text');
+
+    const instagramText = document.getElementById('instagram-text');
+    const discordText = document.getElementById('discord-text');
+    const telegramText = document.getElementById('telegram-text');
+    const robloxText = document.getElementById('roblox-text');
+    const paypalText = document.getElementById('paypal-text');
+
+    let isEnglish = true;
+
+    langToggle.addEventListener('click', () => {
+      if (isEnglish) {
+        document.documentElement.lang = 'ar';
+        document.documentElement.dir = 'rtl';
+        langToggle.textContent = 'EN';
+        title.textContent = 'معاد أولمدني';
+        subtitle.textContent = 'مرحباً بكم في صفحتي الرسمية';
+        loadingText.textContent = 'جاري تحميل تجربتك...';
+        isEnglish = false;
+      } else {
+        document.documentElement.lang = 'en';
+        document.documentElement.dir = 'ltr';
+        langToggle.textContent = 'AR';
+        title.textContent = 'Mouad Oulmadani';
+        subtitle.textContent = 'Welcome to my official page';
+        loadingText.textContent = 'Loading your experience...';
+        isEnglish = true;
+      }
+    });
+
+    document.getElementById("copy-discord").addEventListener("click", function(e) {
+      e.preventDefault();
+      navigator.clipboard.writeText("mouad_oul2008").then(() => {
+        toast.classList.add("show");
+        setTimeout(() => toast.classList.remove("show"), 2000);
+      }).catch(err => {
+        alert("Copy failed. Please try again.");
+      });
+    });
+
+    window.onload = function() {
+      setTimeout(() => {
+        document.getElementById("loading-screen").style.opacity = "0";
+        setTimeout(() => {
+          document.getElementById("loading-screen").style.display = "none";
+          document.getElementById("main-content").style.display = "block";
+        }, 500);
+      }, 3000);
+    };
+  </script>
+
+</body>
+</html>
