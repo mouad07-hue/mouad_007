@@ -19,8 +19,50 @@
       align-items: center;
       text-align: center;
       overflow: hidden;
+      position: relative;
     }
-
+    /* خلفية النجوم الثابتة - تعمل على جميع الأجهزة */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(circle at center, #111 0%, #000 100%);
+      z-index: -2;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-image:
+        radial-gradient(1px 1px at 10% 20%, #FFD700, transparent),
+        radial-gradient(1px 1px at 20% 40%, #F4C542, transparent),
+        radial-gradient(1px 1px at 30% 10%, #FFCA28, transparent),
+        radial-gradient(1px 1px at 40% 60%, #FFD700, transparent),
+        radial-gradient(1px 1px at 50% 20%, #F0B754, transparent),
+        radial-gradient(1px 1px at 60% 70%, #FFB300, transparent),
+        radial-gradient(1px 1px at 70% 30%, #FFD700, transparent),
+        radial-gradient(1px 1px at 80% 50%, #F4C542, transparent),
+        radial-gradient(1px 1px at 90% 80%, #FFCA28, transparent),
+        radial-gradient(1px 1px at 15% 85%, #FFD700, transparent),
+        radial-gradient(1px 1px at 25% 65%, #F0B754, transparent),
+        radial-gradient(1px 1px at 35% 45%, #FFB300, transparent),
+        radial-gradient(1px 1px at 45% 90%, #FFD700, transparent),
+        radial-gradient(1px 1px at 55% 15%, #F4C542, transparent),
+        radial-gradient(1px 1px at 65% 35%, #FFCA28, transparent),
+        radial-gradient(1px 1px at 75% 75%, #FFD700, transparent),
+        radial-gradient(1px 1px at 85% 55%, #F0B754, transparent),
+        radial-gradient(1px 1px at 95% 25%, #FFB300, transparent);
+      z-index: -1;
+      opacity: 0.7;
+      pointer-events: none;
+      animation: twinkle 3s infinite alternate;
+    }
+    @keyframes twinkle {
+      0% { opacity: 0.5; }
+      100% { opacity: 0.9; }
+    }
     /* صفحة التحميل */
     #loading-screen {
       position: fixed;
@@ -36,7 +78,6 @@
       z-index: 9999;
       transition: opacity 1s ease-out;
     }
-
     #loading-logo {
       width: 130px;
       height: 130px;
@@ -45,13 +86,11 @@
       box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
       animation: pulse 1.5s ease-in-out infinite;
     }
-
     @keyframes pulse {
       0% { transform: scale(1); filter: brightness(1); }
       50% { transform: scale(1.2); filter: brightness(1.3); }
       100% { transform: scale(1); filter: brightness(1); }
     }
-
     #loading-text {
       color: #FFD700;
       font-size: 18px;
@@ -61,11 +100,9 @@
       opacity: 0;
       animation: fadeIn 0.8s 0.5s forwards;
     }
-
     @keyframes fadeIn {
       to { opacity: 1; }
     }
-
     /* الصفحة الرئيسية */
     #main-content {
       display: none;
@@ -79,7 +116,6 @@
       border: 1px solid #444;
       position: relative;
     }
-
     .logo {
       width: 140px;
       height: 140px;
@@ -89,20 +125,17 @@
       box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
       object-fit: cover;
     }
-
     h1 {
       font-size: 28px;
       margin-bottom: 10px;
       color: #FFD700;
       text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
     }
-
     p {
       font-size: 16px;
       margin-bottom: 30px;
       color: #ccc;
     }
-
     .lang-toggle {
       position: absolute;
       top: 15px;
@@ -116,14 +149,12 @@
       cursor: pointer;
       box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
     }
-
     .social-links {
       display: flex;
       justify-content: center;
       gap: 18px;
       flex-wrap: wrap;
     }
-
     .social-links a {
       display: flex;
       flex-direction: column;
@@ -141,38 +172,32 @@
       transform: translateY(20px);
       animation: fadeInUp 0.8s ease-out forwards;
     }
-
     .instagram { animation-delay: 0.4s; }
     .discord    { animation-delay: 0.6s; }
     .telegram   { animation-delay: 0.8s; }
     .roblox     { animation-delay: 1.0s; }
     .paypal     { animation-delay: 1.2s; }
-
     @keyframes fadeInUp {
       to {
         opacity: 1;
         transform: translateY(0);
       }
     }
-
     .social-links a:hover {
       transform: translateY(-6px);
       box-shadow: 0 8px 15px rgba(255, 215, 0, 0.3);
     }
-
     .social-links a i {
       font-size: 26px;
       margin-bottom: 6px;
       text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
       color: inherit;
     }
-
     .instagram i { color: #F4C542; }
     .discord i    { color: #FFD700; }
     .telegram i  { color: #F0B754; }
     .roblox i    { color: #FFB300; }
     .paypal i    { color: #FFCA28; }
-
     .toast {
       position: fixed;
       bottom: 20px;
@@ -190,11 +215,9 @@
       pointer-events: none;
       z-index: 9999;
     }
-
     .toast.show {
       opacity: 1;
     }
-
     /* قسم المعلومات الذكية */
     .info-section {
       margin-top: 25px;
@@ -206,23 +229,19 @@
       font-size: 14px;
       line-height: 1.6;
     }
-
     .info-section h3 {
       color: #FFD700;
       margin-bottom: 12px;
       font-size: 16px;
     }
-
     .info-item {
       margin-bottom: 10px;
       color: #ccc;
     }
-
     .info-item a {
       color: #FFCA28;
       text-decoration: underline;
     }
-
     .copy-btn {
       background: #111;
       border: 1px solid #F4C542;
@@ -233,34 +252,35 @@
       cursor: pointer;
       margin-left: 8px;
     }
-
-    /* تأثير ظهور الاسم عند التحميل */
+    /* تأثير الكتابة التلقائية */
     #title {
-      opacity: 0;
-      transform: translateY(-30px);
-      transition: all 0.8s ease-out;
+      font-size: 28px;
+      color: #FFD700;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+      border-right: 2px solid #FFD700;
+      padding-right: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      width: 0;
+      animation: typing 3s steps(15) 0.5s forwards;
+      text-align: center;
+      transform: none !important;
+      opacity: 1 !important;
     }
-
-    #main-content.show-title #title {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* تأثير تمايل عند تغيير اللغة */
-    @keyframes wiggle {
-      0%, 100% { transform: rotate(0deg); }
-      25% { transform: rotate(-5deg); }
-      75% { transform: rotate(5deg); }
-    }
-
-    .wiggle {
-      animation: wiggle 0.6s ease-in-out;
+    @keyframes typing {
+      from { 
+        width: 0;
+        border-color: #FFD700;
+      }
+      to { 
+        width: 100%;
+        border-color: transparent;
+      }
     }
   </style>
 </head>
 <body>
-
-  <!-- شاشة التحميل -->
+  <!-- ✅ شاشة التحميل (تمت إضافتها) -->
   <div id="loading-screen">
     <img src="M.png" alt="Logo" id="loading-logo">
     <div id="loading-text">Loading ...</div>
@@ -272,34 +292,28 @@
     <img src="M.png" alt="Logo" class="logo" />
     <h1 id="title">Mouad Oulmadani</h1>
     <p id="subtitle">Welcome to my official page</p>
-
     <div class="social-links">
       <a href="https://www.instagram.com/mouad_oul007" target="_blank" class="instagram">
         <i class="fab fa-instagram"></i>
-        <span id="instagram-text">Instagram</span>
+        <span>Instagram</span>
       </a>
-
       <a href="#" id="copy-discord" class="discord">
         <i class="fab fa-discord"></i>
-        <span id="discord-text">Discord</span>
+        <span>Discord</span>
       </a>
-
       <a href="https://t.me/mouad_oulmadani" target="_blank" class="telegram">
         <i class="fab fa-telegram"></i>
-        <span id="telegram-text">Telegram</span>
+        <span>Telegram</span>
       </a>
-
       <a href="https://www.roblox.com/users/2895099191/profile" target="_blank" class="roblox">
         <i class="fas fa-cube"></i>
-        <span id="roblox-text">Roblox</span>
+        <span>Roblox</span>
       </a>
-
       <a href="https://paypal.me/mouaa123" target="_blank" class="paypal">
         <i class="fab fa-paypal"></i>
-        <span id="paypal-text">PayPal</span>
+        <span>PayPal</span>
       </a>
     </div>
-
     <!-- قسم المعلومات الذكية -->
     <div class="info-section" id="info-section">
       <h3 id="info-title">📌 Smart Info</h3>
@@ -329,8 +343,6 @@
     const title = document.getElementById('title');
     const subtitle = document.getElementById('subtitle');
     const toast = document.getElementById('toast');
-    const loadingText = document.getElementById('loading-text');
-
     // عناصر قسم المعلومات
     const infoSection = document.getElementById('info-section');
     const infoTitle = document.getElementById('info-title');
@@ -338,58 +350,51 @@
     const instagramDesc = document.getElementById('instagram-desc');
     const paypalLabel = document.getElementById('paypal-label');
     const paypalDesc = document.getElementById('paypal-desc');
-
     let isEnglish = true;
 
-    langToggle.addEventListener('click', () => {
-      // إزالة تأثير التمايل القديم
-      title.classList.remove("wiggle");
-      void title.offsetWidth; // إعادة التزامن
+    // دالة تطبيق تأثير الكتابة
+    function applyTypingEffect(name) {
+      title.style.width = '0';
+      title.style.borderRight = '2px solid #FFD700';
+      title.style.animation = 'none';
+      title.offsetHeight; // إعادة التزامن
+      title.textContent = '';
+      setTimeout(() => {
+        title.textContent = name;
+        title.style.animation = 'typing 3s steps(15) forwards';
+      }, 10);
+    }
 
+    // تبديل اللغة
+    langToggle.addEventListener('click', () => {
+      let newName;
       if (isEnglish) {
-        // التبديل إلى العربية
         document.documentElement.lang = 'ar';
         document.documentElement.dir = 'rtl';
         langToggle.textContent = 'EN';
-        title.textContent = 'معاد أولمدني';
+        newName = 'معاد أولمدني';
         subtitle.textContent = 'مرحباً بكم في صفحتي الرسمية';
-        loadingText.textContent = 'جاري تحميل تجربتك...';
-
-        // ترجمة قسم المعلومات
         infoTitle.textContent = '📌 معلومات ذكية';
         instagramLabel.innerHTML = '📸 إنستغرام:';
         instagramDesc.textContent = 'تابعني على: ';
         paypalLabel.innerHTML = '💰 باي بال:';
         paypalDesc.textContent = 'ادعمني: ';
-
-        // اجعل القسم يتحرك إلى اليمين
         infoSection.style.textAlign = 'right';
-
-        isEnglish = false;
       } else {
-        // التبديل إلى الإنجليزية
         document.documentElement.lang = 'en';
         document.documentElement.dir = 'ltr';
         langToggle.textContent = 'AR';
-        title.textContent = 'Mouad Oulmadani';
+        newName = 'Mouad Oulmadani';
         subtitle.textContent = 'Welcome to my official page';
-        loadingText.textContent = 'Loading your experience...';
-
-        // استعادة النصوص الإنجليزية
         infoTitle.textContent = '📌 Smart Info';
         instagramLabel.innerHTML = '📸 Instagram:';
         instagramDesc.textContent = 'Follow me: ';
         paypalLabel.innerHTML = '💰 PayPal:';
         paypalDesc.textContent = 'Support me: ';
-
-        // استعادة المحاذاة
         infoSection.style.textAlign = 'left';
-
-        isEnglish = true;
       }
-
-      // أضف تأثير التمايل
-      title.classList.add("wiggle");
+      applyTypingEffect(newName);
+      isEnglish = !isEnglish;
     });
 
     // نسخ اسم Discord
@@ -411,29 +416,28 @@
       });
     }
 
-    // رسالة التأكيد
+    // رسالة النسخ
     function showToast(msg) {
       toast.textContent = msg;
       toast.classList.add("show");
       setTimeout(() => toast.classList.remove("show"), 2000);
     }
 
-    // تأثير الدخول
+    // ✅ تأثير الدخول - تم التأكد من إخفاء شاشة التحميل
     window.onload = function() {
       setTimeout(() => {
-        document.getElementById("loading-screen").style.opacity = "0";
-        setTimeout(() => {
-          document.getElementById("loading-screen").style.display = "none";
-          const mainContent = document.getElementById("main-content");
-          mainContent.style.display = "block";
-          // تفعيل حركة ظهور الاسم
+        const loadingScreen = document.getElementById("loading-screen");
+        if (loadingScreen) {
+          loadingScreen.style.opacity = "0";
           setTimeout(() => {
-            mainContent.classList.add("show-title");
-          }, 100);
-        }, 500);
+            loadingScreen.style.display = "none";
+            const mainContent = document.getElementById("main-content");
+            mainContent.style.display = "block";
+            applyTypingEffect('Mouad Oulmadani');
+          }, 500);
+        }
       }, 3000);
     };
   </script>
-
 </body>
 </html>
