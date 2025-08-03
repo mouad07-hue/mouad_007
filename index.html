@@ -6,16 +6,6 @@
   <title>🚀 My Official Page</title>
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
-
-  <!-- ✅ Google Analytics (G-X2Q5SRYJF1) - تتبع سري للزوار -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-X2Q5SRYJF1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-X2Q5SRYJF1');
-  </script>
-
   <style>
     body {
       margin: 0;
@@ -290,7 +280,7 @@
   </style>
 </head>
 <body>
-  <!-- شاشة التحميل -->
+  <!-- ✅ شاشة التحميل (تمت إضافتها) -->
   <div id="loading-screen">
     <img src="M.png" alt="Logo" id="loading-logo">
     <div id="loading-text">Loading ...</div>
@@ -324,7 +314,6 @@
         <span>PayPal</span>
       </a>
     </div>
-
     <!-- قسم المعلومات الذكية -->
     <div class="info-section" id="info-section">
       <h3 id="info-title">📌 Smart Info</h3>
@@ -434,7 +423,7 @@
       setTimeout(() => toast.classList.remove("show"), 2000);
     }
 
-    // إخفاء شاشة التحميل وعرض المحتوى
+    // ✅ تأثير الدخول - تم التأكد من إخفاء شاشة التحميل
     window.onload = function() {
       setTimeout(() => {
         const loadingScreen = document.getElementById("loading-screen");
