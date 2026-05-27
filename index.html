@@ -3,441 +3,1011 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🚀 My Official Page</title>
-  <!-- Font Awesome for icons -->
+  <title>Mouad Oulmadani</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
+    :root {
+      --gold: #FFD700;
+      --gold-dim: #B8960C;
+      --gold-glow: rgba(255, 215, 0, 0.4);
+      --bg: #030303;
+      --surface: rgba(255,255,255,0.03);
+      --border: rgba(255, 215, 0, 0.15);
+      --text: #e8e8e8;
+      --muted: #777;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
     body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #000;
-      color: #fff;
-      height: 100vh;
+      font-family: 'Rajdhani', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      text-align: center;
-      overflow: hidden;
+      overflow-x: hidden;
       position: relative;
     }
-    /* خلفية النجوم الثابتة - تعمل على جميع الأجهزة */
+
+    #particles-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    #pcb-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+    #pcb-canvas.visible {
+      opacity: 1;
+    }
+
     body::before {
       content: '';
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: radial-gradient(circle at center, #111 0%, #000 100%);
-      z-index: -2;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,215,0,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,215,0,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      z-index: 0;
+      animation: gridPan 20s linear infinite;
     }
+    @keyframes gridPan {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(60px); }
+    }
+
     body::after {
       content: '';
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background-image:
-        radial-gradient(1px 1px at 10% 20%, #FFD700, transparent),
-        radial-gradient(1px 1px at 20% 40%, #F4C542, transparent),
-        radial-gradient(1px 1px at 30% 10%, #FFCA28, transparent),
-        radial-gradient(1px 1px at 40% 60%, #FFD700, transparent),
-        radial-gradient(1px 1px at 50% 20%, #F0B754, transparent),
-        radial-gradient(1px 1px at 60% 70%, #FFB300, transparent),
-        radial-gradient(1px 1px at 70% 30%, #FFD700, transparent),
-        radial-gradient(1px 1px at 80% 50%, #F4C542, transparent),
-        radial-gradient(1px 1px at 90% 80%, #FFCA28, transparent),
-        radial-gradient(1px 1px at 15% 85%, #FFD700, transparent),
-        radial-gradient(1px 1px at 25% 65%, #F0B754, transparent),
-        radial-gradient(1px 1px at 35% 45%, #FFB300, transparent),
-        radial-gradient(1px 1px at 45% 90%, #FFD700, transparent),
-        radial-gradient(1px 1px at 55% 15%, #F4C542, transparent),
-        radial-gradient(1px 1px at 65% 35%, #FFCA28, transparent),
-        radial-gradient(1px 1px at 75% 75%, #FFD700, transparent),
-        radial-gradient(1px 1px at 85% 55%, #F0B754, transparent),
-        radial-gradient(1px 1px at 95% 25%, #FFB300, transparent);
-      z-index: -1;
-      opacity: 0.7;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 600px 400px at 20% 80%, rgba(255,215,0,0.04) 0%, transparent 70%),
+        radial-gradient(ellipse 400px 600px at 80% 20%, rgba(255,180,0,0.03) 0%, transparent 70%);
+      z-index: 0;
       pointer-events: none;
-      animation: twinkle 3s infinite alternate;
     }
-    @keyframes twinkle {
-      0% { opacity: 0.5; }
-      100% { opacity: 0.9; }
-    }
-    /* صفحة التحميل */
+
+    /* LOADING SCREEN */
     #loading-screen {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #000;
+      inset: 0;
+      background: var(--bg);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      transition: opacity 1s ease-out;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
-    #loading-logo {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      border: 4px solid #FFD700;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0% { transform: scale(1); filter: brightness(1); }
-      50% { transform: scale(1.2); filter: brightness(1.3); }
-      100% { transform: scale(1); filter: brightness(1); }
-    }
-    #loading-text {
-      color: #FFD700;
-      font-size: 18px;
-      margin-top: 15px;
-      font-weight: 500;
-      letter-spacing: 1px;
+    #loading-screen.hidden {
       opacity: 0;
-      animation: fadeIn 0.8s 0.5s forwards;
+      visibility: hidden;
+      pointer-events: none;
     }
-    @keyframes fadeIn {
-      to { opacity: 1; }
-    }
-    /* الصفحة الرئيسية */
-    #main-content {
-      display: none;
-      width: 100%;
-      max-width: 500px;
-      padding: 40px;
-      background: rgba(30, 30, 30, 0.8);
-      border-radius: 20px;
-      box-shadow: 0 0 30px rgba(255, 215, 0, 0.2);
-      backdrop-filter: blur(10px);
-      border: 1px solid #444;
+    .loader-ring {
       position: relative;
-    }
-    .logo {
       width: 140px;
       height: 140px;
-      margin: 0 auto 25px;
-      border-radius: 50%;
-      border: 4px solid #FFD700;
-      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-      object-fit: cover;
     }
-    h1 {
-      font-size: 28px;
-      margin-bottom: 10px;
-      color: #FFD700;
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-    }
-    p {
-      font-size: 16px;
-      margin-bottom: 30px;
-      color: #ccc;
-    }
-    .lang-toggle {
+    .loader-ring svg {
       position: absolute;
-      top: 15px;
-      right: 15px;
+      inset: 0;
+      animation: rotateSVG 2s linear infinite;
+    }
+    @keyframes rotateSVG {
+      to { transform: rotate(360deg); }
+    }
+    #loading-logo {
+      position: absolute;
+      inset: 12px;
+      width: calc(100% - 24px);
+      height: calc(100% - 24px);
+      border-radius: 50%;
+      object-fit: cover;
       background: #111;
-      border: 1px solid #FFD700;
-      color: #FFD700;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-size: 14px;
+    }
+    .loading-name {
+      font-family: 'Cinzel', serif;
+      font-size: 22px;
+      color: var(--gold);
+      margin-top: 28px;
+      letter-spacing: 4px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.5s forwards;
+    }
+    .loading-bar-wrap {
+      width: 200px;
+      height: 2px;
+      background: rgba(255,215,0,0.1);
+      border-radius: 99px;
+      margin-top: 20px;
+      overflow: hidden;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.8s forwards;
+    }
+    .loading-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+      border-radius: 99px;
+      animation: loadFill 2.5s ease-in-out forwards;
+    }
+    @keyframes loadFill {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* MAIN CONTENT */
+    #main-content {
+      display: none;
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 480px;
+      padding: 20px;
+    }
+    #main-content.visible {
+      display: block;
+    }
+
+    .card {
+      background: rgba(10, 10, 10, 0.85);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 40px 36px 36px;
+      position: relative;
+      backdrop-filter: blur(20px);
+      box-shadow:
+        0 0 0 1px rgba(255,215,0,0.05),
+        0 40px 80px rgba(0,0,0,0.6),
+        inset 0 1px 0 rgba(255,215,0,0.08);
+    }
+
+    .card::before, .card::after {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+    }
+    .card::before {
+      top: -1px; left: -1px;
+      border-top: 2px solid var(--gold);
+      border-left: 2px solid var(--gold);
+      border-radius: 24px 0 0 0;
+    }
+    .card::after {
+      bottom: -1px; right: -1px;
+      border-bottom: 2px solid var(--gold);
+      border-right: 2px solid var(--gold);
+      border-radius: 0 0 24px 0;
+    }
+
+    #lang-toggle {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      background: transparent;
+      border: 1px solid rgba(255,215,0,0.3);
+      color: var(--gold);
+      padding: 5px 14px;
+      border-radius: 99px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
       cursor: pointer;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.2);
+      transition: all 0.3s;
     }
-    .social-links {
+    #lang-toggle:hover {
+      background: rgba(255,215,0,0.08);
+      border-color: var(--gold);
+    }
+
+    /* AVATAR */
+    .avatar-wrap {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 24px;
+      perspective: 600px;
+      cursor: pointer;
+    }
+
+    .avatar-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.15s ease-out;
+      will-change: transform;
+    }
+
+    .avatar-ring {
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      background: conic-gradient(var(--gold), var(--gold-dim), transparent, var(--gold));
+      animation: spinGrad 4s linear infinite;
+      z-index: 0;
+    }
+    .avatar-bg {
+      position: absolute;
+      inset: -2px;
+      border-radius: 50%;
+      background: var(--bg);
+      z-index: 1;
+    }
+    .avatar-wrap img {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #111;
+      transition: box-shadow 0.4s ease;
+    }
+    .avatar-wrap:hover img {
+      box-shadow:
+        0 0 30px rgba(255, 215, 0, 0.55),
+        0 0 60px rgba(255, 215, 0, 0.25),
+        0 20px 50px rgba(0, 0, 0, 0.7);
+    }
+    .avatar-glow {
+      position: absolute;
+      inset: -10px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255,215,0,0.18) 0%, transparent 70%);
+      z-index: 0;
+      opacity: 0;
+      transform: translateZ(-20px);
+      transition: opacity 0.4s ease;
+      pointer-events: none;
+    }
+    .avatar-wrap:hover .avatar-glow {
+      opacity: 1;
+    }
+    .avatar-shadow {
+      position: absolute;
+      bottom: -18px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(255, 215, 0, 0.15);
+      filter: blur(10px);
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.4s ease, width 0.4s ease;
+      pointer-events: none;
+    }
+    .avatar-wrap:hover .avatar-shadow {
+      opacity: 1;
+      width: 100px;
+    }
+
+    @keyframes spinGrad {
+      to { transform: rotate(360deg); }
+    }
+
+    .profile-name {
+      font-family: 'Cinzel', serif;
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--gold);
+      text-align: center;
+      letter-spacing: 2px;
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid var(--gold);
+      max-width: 0;
+      margin: 0 auto 8px;
+      text-shadow: 0 0 30px rgba(255,215,0,0.3);
+      display: inline-block;
+      width: 100%;
+    }
+    .profile-name.typed {
+      animation: typeAnim 1.8s steps(20) forwards;
+    }
+    @keyframes typeAnim {
+      from { max-width: 0; }
+      to { max-width: 100%; border-color: transparent; }
+    }
+    .name-wrap {
+      text-align: center;
+      width: 100%;
+    }
+
+    .profile-sub {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      font-weight: 400;
+    }
+
+    .divider {
       display: flex;
-      justify-content: center;
-      gap: 18px;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
     }
-    .social-links a {
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,215,0,0.2), transparent);
+    }
+    .divider span {
+      color: var(--gold);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .social-links {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+    .social-btn {
       display: flex;
       flex-direction: column;
       align-items: center;
-      color: #FFD700;
-      font-size: 15px;
+      gap: 6px;
+      padding: 14px 4px;
+      border-radius: 14px;
+      background: var(--surface);
+      border: 1px solid rgba(255,255,255,0.05);
+      color: var(--muted);
       text-decoration: none;
-      transition: transform 0.3s, box-shadow 0.3s;
-      width: 80px;
-      padding: 12px 5px;
-      border-radius: 12px;
-      background: #111;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       opacity: 0;
-      transform: translateY(20px);
-      animation: fadeInUp 0.8s ease-out forwards;
+      transform: translateY(16px);
+      position: relative;
+      overflow: hidden;
+      font-family: 'Rajdhani', sans-serif;
     }
-    .instagram { animation-delay: 0.4s; }
-    .discord    { animation-delay: 0.6s; }
-    .telegram   { animation-delay: 0.8s; }
-    .roblox     { animation-delay: 1.0s; }
-    .paypal     { animation-delay: 1.2s; }
-    @keyframes fadeInUp {
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .social-links a:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 8px 15px rgba(255, 215, 0, 0.3);
-    }
-    .social-links a i {
-      font-size: 26px;
-      margin-bottom: 6px;
-      text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-      color: inherit;
-    }
-    .instagram i { color: #F4C542; }
-    .discord i    { color: #FFD700; }
-    .telegram i  { color: #F0B754; }
-    .roblox i    { color: #FFB300; }
-    .paypal i    { color: #FFCA28; }
-    .toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.9);
-      color: #FFD700;
-      padding: 12px 25px;
-      border-radius: 8px;
-      font-size: 14px;
+    .social-btn::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,215,0,0.08), transparent);
       opacity: 0;
       transition: opacity 0.3s;
-      border: 1px solid #FFD700;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+    }
+    .social-btn:hover::before { opacity: 1; }
+    .social-btn:hover {
+      color: var(--gold);
+      border-color: rgba(255,215,0,0.3);
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 28px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,215,0,0.1);
+    }
+    .social-btn i { font-size: 22px; }
+    .social-btn.active {
+      animation: fadeSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+    @keyframes fadeSlideIn {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .info-section {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .info-section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+    .info-title {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      color: var(--gold);
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+    }
+    .info-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .info-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      background: rgba(255,215,0,0.06);
+      border: 1px solid rgba(255,215,0,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .info-content { flex: 1; min-width: 0; }
+    .info-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 3px;
+    }
+    .info-value {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 500;
+      word-break: break-all;
+    }
+    .info-value a {
+      color: var(--gold);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .info-value a:hover { opacity: 0.7; }
+    .copy-btn {
+      background: rgba(255,215,0,0.07);
+      border: 1px solid rgba(255,215,0,0.2);
+      color: var(--gold);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.5px;
+      transition: all 0.2s;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+    .copy-btn:hover {
+      background: rgba(255,215,0,0.15);
+      border-color: var(--gold);
+    }
+
+    #toast {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(5,5,5,0.95);
+      color: var(--gold);
+      padding: 12px 24px;
+      border-radius: 99px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      border: 1px solid rgba(255,215,0,0.25);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,215,0,0.05);
+      opacity: 0;
+      transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
       pointer-events: none;
       z-index: 9999;
-    }
-    .toast.show {
-      opacity: 1;
-    }
-    /* قسم المعلومات الذكية */
-    .info-section {
-      margin-top: 25px;
-      padding: 18px;
-      background: #1a1a1a;
-      border-radius: 12px;
-      border: 1px solid #444;
-      text-align: left;
-      font-size: 14px;
-      line-height: 1.6;
-    }
-    .info-section h3 {
-      color: #FFD700;
-      margin-bottom: 12px;
-      font-size: 16px;
-    }
-    .info-item {
-      margin-bottom: 10px;
-      color: #ccc;
-    }
-    .info-item a {
-      color: #FFCA28;
-      text-decoration: underline;
-    }
-    .copy-btn {
-      background: #111;
-      border: 1px solid #F4C542;
-      color: #F4C542;
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-size: 13px;
-      cursor: pointer;
-      margin-left: 8px;
-    }
-    /* تأثير الكتابة التلقائية */
-    #title {
-      font-size: 28px;
-      color: #FFD700;
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-      border-right: 2px solid #FFD700;
-      padding-right: 10px;
-      overflow: hidden;
       white-space: nowrap;
-      width: 0;
-      animation: typing 3s steps(15) 0.5s forwards;
-      text-align: center;
-      transform: none !important;
-      opacity: 1 !important;
     }
-    @keyframes typing {
-      from { 
-        width: 0;
-        border-color: #FFD700;
-      }
-      to { 
-        width: 100%;
-        border-color: transparent;
-      }
+    #toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 32px 20px 28px; }
+      .profile-name { font-size: 22px; }
+      .social-links { gap: 8px; }
+      .social-btn { padding: 12px 4px; }
     }
   </style>
 </head>
 <body>
-  <!-- ✅ شاشة التحميل (تمت إضافتها) -->
+
+  <canvas id="particles-canvas"></canvas>
+  <canvas id="pcb-canvas"></canvas>
+
+  <!-- LOADING SCREEN -->
   <div id="loading-screen">
-    <img src="M.png" alt="Logo" id="loading-logo">
-    <div id="loading-text">Loading ...</div>
+    <div class="loader-ring">
+      <svg viewBox="0 0 140 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="70" cy="70" r="64" stroke="rgba(255,215,0,0.08)" stroke-width="2"/>
+        <path d="M70 6 A64 64 0 0 1 134 70" stroke="url(#grad)" stroke-width="2.5" stroke-linecap="round"/>
+        <defs>
+          <linearGradient id="grad" x1="70" y1="6" x2="134" y2="70" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#FFD700"/>
+            <stop offset="100%" stop-color="transparent"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <img src="M.png" id="loading-logo" alt="Logo" onerror="this.style.display='none'"/>
+    </div>
+    <div class="loading-name">MOUAD</div>
+    <div class="loading-bar-wrap">
+      <div class="loading-bar"></div>
+    </div>
   </div>
 
-  <!-- المحتوى الرئيسي -->
+  <!-- MAIN CONTENT -->
   <div id="main-content">
-    <button class="lang-toggle" id="lang-toggle">AR</button>
-    <img src="M.png" alt="Logo" class="logo" />
-    <h1 id="title">Mouad Oulmadani</h1>
-    <p id="subtitle">Welcome to my official page</p>
-    <div class="social-links">
-      <a href="https://www.instagram.com/mouad_oul007" target="_blank" class="instagram">
-        <i class="fab fa-instagram"></i>
-        <span>Instagram</span>
-      </a>
-      <a href="#" id="copy-discord" class="discord">
-        <i class="fab fa-discord"></i>
-        <span>Discord</span>
-      </a>
-      <a href="https://t.me/mouad_oulmadani" target="_blank" class="telegram">
-        <i class="fab fa-telegram"></i>
-        <span>Telegram</span>
-      </a>
-      <a href="https://www.roblox.com/users/2895099191/profile" target="_blank" class="roblox">
-        <i class="fas fa-cube"></i>
-        <span>Roblox</span>
-      </a>
-      <a href="https://paypal.me/mouaa123" target="_blank" class="paypal">
-        <i class="fab fa-paypal"></i>
-        <span>PayPal</span>
-      </a>
-    </div>
-    <!-- قسم المعلومات الذكية -->
-    <div class="info-section" id="info-section">
-      <h3 id="info-title">📌 Smart Info</h3>
-      <div class="info-item">
-        <strong id="instagram-label">📸 Instagram:</strong>
-        <button onclick="copyInsta()" class="copy-btn">Copy @</button>
-        <div style="margin-top: 4px; font-size: 13px;">
-          <span id="instagram-desc">Follow me: </span>
-          <a href="https://www.instagram.com/mouad_oul007" target="_blank">@mouad_oul007</a>
+    <div class="card">
+
+      <button id="lang-toggle">AR</button>
+
+      <div class="avatar-wrap" id="avatar-wrap">
+        <div class="avatar-glow"></div>
+        <div class="avatar-inner" id="avatar-inner">
+          <div class="avatar-ring"></div>
+          <div class="avatar-bg"></div>
+          <img src="M.png" alt="Mouad Oulmadani" onerror="this.style.display='none'"/>
+        </div>
+        <div class="avatar-shadow"></div>
+      </div>
+
+      <div class="name-wrap">
+        <div class="profile-name" id="title">Mouad Oulmadani</div>
+      </div>
+      <div class="profile-sub" id="subtitle">Welcome to my official page</div>
+
+      <div class="divider"><span>Connect</span></div>
+
+      <div class="social-links">
+        <a href="https://www.instagram.com/mouad_oul007" target="_blank" class="social-btn instagram">
+          <i class="fab fa-instagram"></i>
+          <span>Insta</span>
+        </a>
+        <a href="#" id="copy-discord" class="social-btn discord">
+          <i class="fab fa-discord"></i>
+          <span>Discord</span>
+        </a>
+        <a href="https://t.me/mouad_oulmadani" target="_blank" class="social-btn telegram">
+          <i class="fab fa-telegram"></i>
+          <span>Telegram</span>
+        </a>
+        <a href="https://www.roblox.com/users/2895099191/profile" target="_blank" class="social-btn roblox">
+          <i class="fas fa-cube"></i>
+          <span>Roblox</span>
+        </a>
+        <a href="https://paypal.me/mouaa123" target="_blank" class="social-btn paypal">
+          <i class="fab fa-paypal"></i>
+          <span>PayPal</span>
+        </a>
+      </div>
+
+      <div class="info-section" id="info-section">
+        <div class="info-title" id="info-title">📌 SMART INFO</div>
+
+        <div class="info-row">
+          <div class="info-icon"><i class="fab fa-instagram"></i></div>
+          <div class="info-content">
+            <div class="info-label" id="instagram-label">Instagram</div>
+            <div class="info-value">
+              <span id="instagram-desc">Follow me: </span>
+              <a href="https://www.instagram.com/mouad_oul007" target="_blank">@mouad_oul007</a>
+            </div>
+          </div>
+          <button class="copy-btn" id="copy-insta-btn">Copy</button>
+        </div>
+
+        <div class="info-row">
+          <div class="info-icon"><i class="fab fa-paypal"></i></div>
+          <div class="info-content">
+            <div class="info-label" id="paypal-label">PayPal</div>
+            <div class="info-value">
+              <span id="paypal-desc">Support me: </span>
+              <a href="https://paypal.me/mouaa123" target="_blank">paypal.me/mouaa123</a>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="info-item">
-        <strong id="paypal-label">💰 PayPal:</strong>
-        <div style="margin-top: 4px; font-size: 13px;">
-          <span id="paypal-desc">Support me: </span>
-          <a href="https://paypal.me/mouaa123" target="_blank">paypal.me/mouaa123</a>
-        </div>
-      </div>
+
     </div>
   </div>
 
-  <!-- رسالة النسخ -->
-  <div class="toast" id="toast">Copied: </div>
+  <div id="toast"></div>
 
   <script>
-    const langToggle = document.getElementById('lang-toggle');
-    const title = document.getElementById('title');
-    const subtitle = document.getElementById('subtitle');
-    const toast = document.getElementById('toast');
-    // عناصر قسم المعلومات
-    const infoSection = document.getElementById('info-section');
-    const infoTitle = document.getElementById('info-title');
-    const instagramLabel = document.getElementById('instagram-label');
-    const instagramDesc = document.getElementById('instagram-desc');
-    const paypalLabel = document.getElementById('paypal-label');
-    const paypalDesc = document.getElementById('paypal-desc');
-    let isEnglish = true;
+    /* PCB BACKGROUND */
+    (function() {
+      var canvas = document.getElementById('pcb-canvas');
+      var ctx = canvas.getContext('2d');
+      var W, H, nodes = [], lines = [], pulses = [];
 
-    // دالة تطبيق تأثير الكتابة
-    function applyTypingEffect(name) {
-      title.style.width = '0';
-      title.style.borderRight = '2px solid #FFD700';
-      title.style.animation = 'none';
-      title.offsetHeight; // إعادة التزامن
-      title.textContent = '';
-      setTimeout(() => {
-        title.textContent = name;
-        title.style.animation = 'typing 3s steps(15) forwards';
-      }, 10);
-    }
-
-    // تبديل اللغة
-    langToggle.addEventListener('click', () => {
-      let newName;
-      if (isEnglish) {
-        document.documentElement.lang = 'ar';
-        document.documentElement.dir = 'rtl';
-        langToggle.textContent = 'EN';
-        newName = 'معاد أولمدني';
-        subtitle.textContent = 'مرحباً بكم في صفحتي الرسمية';
-        infoTitle.textContent = '📌 معلومات ذكية';
-        instagramLabel.innerHTML = '📸 إنستغرام:';
-        instagramDesc.textContent = 'تابعني على: ';
-        paypalLabel.innerHTML = '💰 باي بال:';
-        paypalDesc.textContent = 'ادعمني: ';
-        infoSection.style.textAlign = 'right';
-      } else {
-        document.documentElement.lang = 'en';
-        document.documentElement.dir = 'ltr';
-        langToggle.textContent = 'AR';
-        newName = 'Mouad Oulmadani';
-        subtitle.textContent = 'Welcome to my official page';
-        infoTitle.textContent = '📌 Smart Info';
-        instagramLabel.innerHTML = '📸 Instagram:';
-        instagramDesc.textContent = 'Follow me: ';
-        paypalLabel.innerHTML = '💰 PayPal:';
-        paypalDesc.textContent = 'Support me: ';
-        infoSection.style.textAlign = 'left';
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+        buildGrid();
       }
-      applyTypingEffect(newName);
-      isEnglish = !isEnglish;
-    });
 
-    // نسخ اسم Discord
-    document.getElementById("copy-discord").addEventListener("click", function(e) {
-      e.preventDefault();
-      navigator.clipboard.writeText("mouad_oul2008").then(() => {
-        showToast("Copied Discord: mouad_oul2008");
-      }).catch(() => {
-        alert("نسخ الاسم فشل. رجاءً جرب مرة أخرى.");
-      });
-    });
+      function rand(a, b) { return Math.random() * (b - a) + a; }
 
-    // نسخ اسم Instagram
-    function copyInsta() {
-      navigator.clipboard.writeText("@mouad_oul007").then(() => {
-        showToast("Copied Instagram: @mouad_oul007");
-      }).catch(() => {
-        alert("نسخ الاسم فشل. رجاءً جرب مرة أخرى.");
-      });
-    }
-
-    // رسالة النسخ
-    function showToast(msg) {
-      toast.textContent = msg;
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2000);
-    }
-
-    // ✅ تأثير الدخول - تم التأكد من إخفاء شاشة التحميل
-    window.onload = function() {
-      setTimeout(() => {
-        const loadingScreen = document.getElementById("loading-screen");
-        if (loadingScreen) {
-          loadingScreen.style.opacity = "0";
-          setTimeout(() => {
-            loadingScreen.style.display = "none";
-            const mainContent = document.getElementById("main-content");
-            mainContent.style.display = "block";
-            applyTypingEffect('Mouad Oulmadani');
-          }, 500);
+      function buildGrid() {
+        nodes = []; lines = []; pulses = [];
+        var cols = Math.ceil(W / 55), rows = Math.ceil(H / 55);
+        for (var r = 0; r < rows; r++) {
+          for (var c = 0; c < cols; c++) {
+            nodes.push({
+              x: c * 55 + rand(-10, 10),
+              y: r * 55 + rand(-10, 10),
+              r: rand(1.5, 4),
+              glow: rand(0, Math.PI * 2)
+            });
+          }
         }
+        for (var i = 0; i < nodes.length; i++) {
+          var n = nodes[i];
+          var attempts = Math.floor(rand(1, 4));
+          for (var j = 0; j < attempts; j++) {
+            var ti = Math.floor(rand(0, nodes.length));
+            if (ti === i) continue;
+            var t = nodes[ti];
+            var dx = t.x - n.x, dy = t.y - n.y;
+            var dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 90 && dist > 20) {
+              lines.push({
+                x1: n.x, y1: n.y,
+                x2: t.x, y2: t.y,
+                corner: Math.random() > 0.5,
+                alpha: rand(0.04, 0.12)
+              });
+            }
+          }
+        }
+        for (var k = 0; k < 20; k++) spawnPulse();
+      }
+
+      function spawnPulse() {
+        var li = Math.floor(rand(0, lines.length));
+        var l = lines[li];
+        if (!l) return;
+        pulses.push({
+          line: l,
+          t: Math.random(),
+          speed: rand(0.002, 0.006),
+          alpha: rand(0.5, 1),
+          size: rand(2, 4)
+        });
+      }
+
+      function drawPCB() {
+        ctx.clearRect(0, 0, W, H);
+        ctx.lineWidth = 0.7;
+        for (var i = 0; i < lines.length; i++) {
+          var l = lines[i];
+          ctx.globalAlpha = l.alpha;
+          ctx.strokeStyle = '#FFD700';
+          ctx.beginPath();
+          ctx.moveTo(l.x1, l.y1);
+          if (l.corner) { ctx.lineTo(l.x1, l.y2); }
+          ctx.lineTo(l.x2, l.y2);
+          ctx.stroke();
+        }
+        for (var i = 0; i < nodes.length; i++) {
+          var n = nodes[i];
+          n.glow += 0.018;
+          var pulse = 0.4 + Math.sin(n.glow) * 0.6;
+          ctx.globalAlpha = pulse * 0.55;
+          ctx.fillStyle = '#FFD700';
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+          ctx.fill();
+          if (n.r > 2.5) {
+            ctx.globalAlpha = pulse * 0.12;
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.r * 3.5, 0, Math.PI * 2);
+            ctx.fill();
+          }
+        }
+        for (var i = pulses.length - 1; i >= 0; i--) {
+          var p = pulses[i];
+          p.t += p.speed;
+          if (p.t > 1) { pulses.splice(i, 1); spawnPulse(); continue; }
+          var l = p.line;
+          var px, py;
+          if (l.corner) {
+            var d1 = Math.abs(l.y2 - l.y1);
+            var d2 = Math.abs(l.x2 - l.x1);
+            var total = d1 + d2;
+            var dist = p.t * total;
+            if (dist < d1) {
+              px = l.x1;
+              py = l.y1 + dist * (l.y2 > l.y1 ? 1 : -1);
+            } else {
+              px = l.x1 + (dist - d1) * (l.x2 > l.x1 ? 1 : -1);
+              py = l.y2;
+            }
+          } else {
+            px = l.x1 + (l.x2 - l.x1) * p.t;
+            py = l.y1 + (l.y2 - l.y1) * p.t;
+          }
+          ctx.globalAlpha = p.alpha * 0.9;
+          ctx.fillStyle = '#FFD700';
+          ctx.beginPath();
+          ctx.arc(px, py, p.size, 0, Math.PI * 2);
+          ctx.fill();
+          ctx.globalAlpha = p.alpha * 0.2;
+          ctx.beginPath();
+          ctx.arc(px, py, p.size * 2.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.globalAlpha = 1;
+        requestAnimationFrame(drawPCB);
+      }
+
+      resize();
+      window.addEventListener('resize', resize);
+      drawPCB();
+
+      setTimeout(function() {
+        canvas.classList.add('visible');
+      }, 3800);
+    })();
+
+    /* PARTICLES */
+    (function() {
+      var canvas = document.getElementById('particles-canvas');
+      var ctx = canvas.getContext('2d');
+      var particles = [];
+      var W, H;
+
+      function resize() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+      }
+      resize();
+      window.addEventListener('resize', resize);
+
+      function rand(min, max) { return Math.random() * (max - min) + min; }
+
+      function createParticle() {
+        return {
+          x: rand(0, W), y: rand(0, H),
+          r: rand(0.6, 2.2),
+          vx: rand(-0.18, 0.18), vy: rand(-0.35, -0.08),
+          alpha: rand(0.3, 1),
+          fadeDir: Math.random() > 0.5 ? 1 : -1,
+          fadeSpeed: rand(0.003, 0.009),
+          twinkle: rand(0, Math.PI * 2)
+        };
+      }
+
+      for (var i = 0; i < 110; i++) particles.push(createParticle());
+
+      function drawStar(x, y, r, alpha) {
+        ctx.save();
+        ctx.globalAlpha = alpha;
+        ctx.fillStyle = '#FFD700';
+        ctx.shadowBlur = r * 5;
+        ctx.shadowColor = 'rgba(255,215,0,0.6)';
+        ctx.beginPath();
+        ctx.arc(x, y, r, 0, Math.PI * 2);
+        ctx.fill();
+        if (r > 1.4) {
+          ctx.strokeStyle = 'rgba(255,215,0,0.4)';
+          ctx.lineWidth = 0.5;
+          ctx.beginPath();
+          ctx.moveTo(x - r * 2.5, y); ctx.lineTo(x + r * 2.5, y);
+          ctx.moveTo(x, y - r * 2.5); ctx.lineTo(x, y + r * 2.5);
+          ctx.stroke();
+        }
+        ctx.restore();
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, W, H);
+        for (var i = 0; i < particles.length; i++) {
+          var p = particles[i];
+          p.twinkle += p.fadeSpeed * 2;
+          p.alpha = 0.4 + Math.sin(p.twinkle) * 0.5;
+          p.alpha = Math.max(0.05, Math.min(1, p.alpha));
+          p.x += p.vx; p.y += p.vy;
+          if (p.y < -10 || p.x < -10 || p.x > W + 10) {
+            particles[i] = createParticle();
+            particles[i].y = H + 5;
+          }
+          drawStar(p.x, p.y, p.r, p.alpha);
+        }
+        requestAnimationFrame(animate);
+      }
+      animate();
+    })();
+
+    /* INIT */
+    function initApp() {
+      setTimeout(function() {
+        var ls = document.getElementById('loading-screen');
+        ls.classList.add('hidden');
+        setTimeout(function() {
+          ls.style.display = 'none';
+          var mc = document.getElementById('main-content');
+          mc.classList.add('visible');
+          triggerTyping('Mouad Oulmadani');
+          document.querySelectorAll('.social-btn').forEach(function(btn, i) {
+            setTimeout(function() { btn.classList.add('active'); }, 300 + i * 100);
+          });
+        }, 800);
       }, 3000);
-    };
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initApp);
+    } else {
+      initApp();
+    }
+
+    /* TYPING */
+    function triggerTyping(name) {
+      var el = document.getElementById('title');
+      el.classList.remove('typed');
+      el.textContent = name;
+      void el.offsetWidth;
+      el.classList.add('typed');
+    }
+
+    /* LANGUAGE */
+    var isEnglish = true;
+    document.getElementById('lang-toggle').addEventListener('click', function() {
+      isEnglish = !isEnglish;
+      var html = document.documentElement;
+      if (!isEnglish) {
+        html.lang = 'ar'; html.dir = 'rtl';
+        document.getElementById('lang-toggle').textContent = 'EN';
+        triggerTyping('معاد أولمدني');
+        document.getElementById('subtitle').textContent = 'مرحباً بكم في صفحتي الرسمية';
+        document.getElementById('info-title').textContent = '📌 معلومات ذكية';
+        document.getElementById('instagram-label').textContent = 'إنستغرام';
+        document.getElementById('instagram-desc').textContent = 'تابعني: ';
+        document.getElementById('paypal-label').textContent = 'باي بال';
+        document.getElementById('paypal-desc').textContent = 'ادعمني: ';
+      } else {
+        html.lang = 'en'; html.dir = 'ltr';
+        document.getElementById('lang-toggle').textContent = 'AR';
+        triggerTyping('Mouad Oulmadani');
+        document.getElementById('subtitle').textContent = 'Welcome to my official page';
+        document.getElementById('info-title').textContent = '📌 SMART INFO';
+        document.getElementById('instagram-label').textContent = 'Instagram';
+        document.getElementById('instagram-desc').textContent = 'Follow me: ';
+        document.getElementById('paypal-label').textContent = 'PayPal';
+        document.getElementById('paypal-desc').textContent = 'Support me: ';
+      }
+    });
+
+    /* COPY */
+    function copyText(text, label) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(function() {
+          showToast('✓ Copied: ' + label);
+        }).catch(function() { fallbackCopy(text, label); });
+      } else {
+        fallbackCopy(text, label);
+      }
+    }
+    function fallbackCopy(text, label) {
+      var ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.cssText = 'position:fixed;top:-9999px;left:-9999px;opacity:0';
+      document.body.appendChild(ta);
+      ta.focus(); ta.select();
+      try { document.execCommand('copy'); showToast('✓ Copied: ' + label); }
+      catch(e) { showToast('Could not copy'); }
+      document.body.removeChild(ta);
+    }
+
+    document.getElementById('copy-discord').addEventListener('click', function(e) {
+      e.preventDefault();
+      copyText('mouad_oul2008', 'mouad_oul2008');
+    });
+    document.getElementById('copy-insta-btn').addEventListener('click', function() {
+      copyText('@mouad_oul007', '@mouad_oul007');
+    });
+
+    /* TOAST */
+    function showToast(msg) {
+      var t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(function() { t.classList.remove('show'); }, 2200);
+    }
+
+    /* AVATAR 3D TILT */
+    (function() {
+      var wrap = document.getElementById('avatar-wrap');
+      var inner = document.getElementById('avatar-inner');
+      if (!wrap || !inner) return;
+
+      var autoAngle = 0;
+      var isHovered = false;
+      var currentX = 0, currentY = 0;
+      var targetX = 0, targetY = 0;
+      var raf;
+
+      function lerp(a, b, t) { return a + (b - a) * t; }
+
+      function autoRotate() {
+        if (!isHovered) {
+          autoAngle += 0.4;
+          var rx = Math.sin(autoAngle * Math.PI / 180) * 6;
+          var ry = Math.cos(autoAngle * Math.PI / 180 * 0.7) * 8;
+          currentX = lerp(currentX, rx, 0.05);
+          currentY = lerp(currentY, ry, 0.05);
+          inner.style.transform =
+            'rotateX(' + currentX + 'deg) rotateY(' + currentY + 'deg)';
+        }
+        raf = requestAnimationFrame(autoRotate);
+      }
+      autoRotate();
+
+      wrap.addEventListener('mousemove', function(e) {
+        var rect = wrap.getBoundingClientRect();
+        var cx = rect.left + rect.width / 2;
+        var cy = rect.top + rect.height / 2;
+        var dx = (e.clientX - cx) / (rect.width / 2);
+        var dy = (e.clientY - cy) / (rect.height / 2);
+        targetX = -dy * 22;
+        targetY = dx * 22;
+      });
+
+      wrap.addEventListener('mouseenter', function() {
+        isHovered = true;
+        cancelAnimationFrame(raf);
+        function tiltLoop() {
+          if (!isHovered) return;
+          currentX = lerp(currentX, targetX, 0.1);
+          currentY = lerp(currentY, targetY, 0.1);
+          inner.style.transform =
+            'rotateX(' + currentX + 'deg) rotateY(' + currentY + 'deg) scale(1.06)';
+          raf = requestAnimationFrame(tiltLoop);
+        }
+        tiltLoop();
+      });
+
+      wrap.addEventListener('mouseleave', function() {
+        isHovered = false;
+        targetX = 0; targetY = 0;
+        cancelAnimationFrame(raf);
+        autoRotate();
+      });
+
+      wrap.addEventListener('click', function() {
+        inner.style.transition = 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1)';
+        inner.style.transform = 'rotateY(360deg) scale(1.1)';
+        setTimeout(function() {
+          inner.style.transition = 'transform 0.15s ease-out';
+          inner.style.transform = 'rotateY(0deg) scale(1)';
+        }, 500);
+      });
+    })();
   </script>
 </body>
 </html>
